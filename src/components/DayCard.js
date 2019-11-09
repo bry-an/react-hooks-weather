@@ -2,7 +2,6 @@ import React from "react";
 import { Col, Card, CardHeader, CardBody } from "reactstrap";
 import styled from "styled-components";
 
-const border = "2px solid green";
 const DayWrapper = styled.article`
   .card {
     text-align: center;
