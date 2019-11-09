@@ -18,7 +18,12 @@ const App = () => {
   // on every render, trigger this => but the deps array means only on initial render
   useEffect(() => {
     getWeather("Denver,CO");
-  }, []); // [] is deps array (dependencies array) => call once and never again
+  }, []); // [] is deps array (dependencies array) => call once and never again, i.e. no dependencies
+
+  const { days, location, selectedDay, searchTerm } = data;
+  useEffect(() => {
+    document.title = `This week's weather ${location ? "for " + location : ""}`;
+  }, [location]); // every time location changes
 
   const getWeather = city => {
     API.getWeather(city)
@@ -50,10 +55,12 @@ const App = () => {
 
   const handleFormSubmit = event => {
     event.preventDefault();
-    getWeather(searchTerm);
+    if (searchTerm) {
+      getWeather(searchTerm);
+    } else {
+      alert("You must enter a city to search");
+    }
   };
-
-  const { days, location, selectedDay, searchTerm } = data;
 
   return (
     <Container>

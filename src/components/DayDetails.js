@@ -3,6 +3,9 @@ import { Card } from "reactstrap";
 
 import styled from "styled-components";
 
+const styleObj = {
+  width: "100px"
+};
 const DayDetails = ({
   day,
   description,
@@ -20,6 +23,7 @@ const DayDetails = ({
       <img
         src={`${process.env.PUBLIC_URL}/icons/${icon}.png`}
         alt={description}
+        style={styleObj}
       />
       <p>
         <strong>High Temp: </strong>
@@ -39,7 +43,7 @@ const DayDetails = ({
       </p>
       <p>
         <strong>Precipitation: </strong>
-        {precip}°
+        {precip}%
       </p>
     </Card>
   );
