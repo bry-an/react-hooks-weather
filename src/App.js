@@ -5,6 +5,16 @@ import SearchBar from "./components/SearchBar";
 import DayCard from "./components/DayCard";
 import DayDetails from "./components/DayDetails";
 import API from "./utils/api";
+import styled from "styled-components";
+
+const AppWrapper = styled.article`
+  .app {
+    margin-top: 20px;
+  }
+  img {
+    width: 55px;
+  }
+`;
 
 const App = () => {
   // initial state value
@@ -63,56 +73,60 @@ const App = () => {
   };
 
   return (
-    <Container>
-      <Row>
-        <Col md={8}>
-          <h1>Weather for {location}</h1>
-        </Col>
-        <Col md={4}>
-          <SearchBar
-            handleInputChange={handleInputChange}
-            searchTerm={searchTerm}
-            handleFormSubmit={handleFormSubmit}
-          />
-        </Col>
-      </Row>
-      <Row>
-        {days.map(day => (
-          <DayCard
-            key={day.ts}
-            day={moment(day.valid_date, "YYYY-MM-DD").format("dddd")}
-            current={day.temp}
-            high={day.max_temp}
-            low={day.min_temp}
-            icon={day.weather.icon}
-            description={day.weather.description}
-            setSelectedDay={() => setSelectedDay(day)}
-            isActive={day === selectedDay}
-          />
-        ))}
-      </Row>
-      <Row>
-        <Col>
-          {selectedDay ? (
-            <DayDetails
-              day={moment(selectedDay.valid_date, "YYYY-MM-DD").format(
-                "dddd, MMMM Do, YYYY"
+    <AppWrapper>
+      <div className="app">
+        <Container>
+          <Row>
+            <Col md={8}>
+              <h1>Weather for {location}</h1>
+            </Col>
+            <Col md={4}>
+              <SearchBar
+                handleInputChange={handleInputChange}
+                searchTerm={searchTerm}
+                handleFormSubmit={handleFormSubmit}
+              />
+            </Col>
+          </Row>
+          <Row>
+            {days.map(day => (
+              <DayCard
+                key={day.ts}
+                day={moment(day.valid_date, "YYYY-MM-DD").format("dddd")}
+                current={day.temp}
+                high={day.max_temp}
+                low={day.min_temp}
+                icon={day.weather.icon}
+                description={day.weather.description}
+                setSelectedDay={() => setSelectedDay(day)}
+                isActive={day === selectedDay}
+              />
+            ))}
+          </Row>
+          <Row>
+            <Col>
+              {selectedDay ? (
+                <DayDetails
+                  day={moment(selectedDay.valid_date, "YYYY-MM-DD").format(
+                    "dddd, MMMM Do, YYYY"
+                  )}
+                  current={selectedDay.temp}
+                  high={selectedDay.max_temp}
+                  low={selectedDay.min_temp}
+                  icon={selectedDay.weather.icon}
+                  description={selectedDay.weather.description}
+                  windSpeed={selectedDay.wind_spd}
+                  windDir={selectedDay.wind_cdir_full}
+                  precip={selectedDay.pop}
+                />
+              ) : (
+                "Please Select a Day"
               )}
-              current={selectedDay.temp}
-              high={selectedDay.max_temp}
-              low={selectedDay.min_temp}
-              icon={selectedDay.weather.icon}
-              description={selectedDay.weather.description}
-              windSpeed={selectedDay.wind_spd}
-              windDir={selectedDay.wind_cdir_full}
-              precip={selectedDay.pop}
-            />
-          ) : (
-            "Please Select a Day"
-          )}
-        </Col>
-      </Row>
-    </Container>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </AppWrapper>
   );
 };
 
